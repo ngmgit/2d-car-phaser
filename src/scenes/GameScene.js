@@ -1,36 +1,24 @@
 import Car from '../sprites/car';
 import BrickSpawner from '../sprites/brickSpawner';
 
+const SCORE_DELAY = 2;
+
 class GameScene extends Phaser.Scene {
     constructor() {
         super({
             key: 'GameScene'
         });
+
+        this.currentScoreDelay = 0;
     }
 
     preload() {
     }
 
     create() {
-        this.bg = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'road');
-        this.bg.setDisplaySize(this.game.config.width, this.game.config.height);
-
-        this.car = new Car({
-            scene: this,
-            key: 'car',
-            x: 50,
-            y: 600
-        });
-
-        // Add and play the music
-        this.music = this.sound.add('mars-slow');
-        this.music.play({
-            loop: true
-        });
-
-        this.brickSpawner = new BrickSpawner({
-            scene: this
-        });
+        this.SpawnObjects();
+        this.SetAudio();
+        this.SetHUD();
 
         this.keys = {
             right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
@@ -41,12 +29,80 @@ class GameScene extends Phaser.Scene {
     update(time, delta) {
         this.car.update(this.keys, time, delta);
         this.brickSpawner.update(time, delta);
+
+        this.currentScoreDelay += delta / 1000;
+
+        if (this.currentScoreDelay > SCORE_DELAY) {
+            this.UpdateScore();
+            this.currentScoreDelay = 0;
+        }
+    }
+
+    SpawnObjects() {
+        this.bg = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'road');
+        this.bg.setDisplaySize(this.game.config.width, this.game.config.height);
+
+        this.car = new Car({
+            scene: this,
+            key: 'car',
+            x: 50,
+            y: 600
+        });
+
+        this.brickSpawner = new BrickSpawner({
+            scene: this
+        });
+    }
+
+    SetAudio() {
+        // Add and play the music
+        this.music = this.sound.add('mars-slow');
+        this.music.play({
+            loop: true
+        });
+    }
+
+    SetHUD() {
+        this.score = {
+            pts: 0,
+            textObject: this.make.text({
+                x: 380,
+                y: 60,
+                text: '0',
+                origin: {
+                    x: 1,
+                    y: 0.5
+                },
+                style: {
+                    fontSize: '24px',
+                    fontFamily: 'Arial',
+                    color: '#ffffff',
+                    align: 'right'
+                },
+                add: true
+            })
+        };
+    }
+
+    UpdateScore() {
+        this.score.pts += 1;
+        this.score.textObject.setText(this.score.pts);
     }
 
     ResetGame() {
         this.scene.start('TitleScene');
+        this.ResetMusic();
+        this.ResetScore();
+    }
+
+    ResetMusic() {
         this.music.pause();
         this.music.seek = 0;
+    }
+
+    ResetScore () {
+        this.score.pts = 0;
+        this.score.textObject.setText(0);
     }
 }
 
