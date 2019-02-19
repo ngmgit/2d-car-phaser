@@ -1,8 +1,6 @@
 import Car from '../sprites/car';
 import BrickSpawner from '../sprites/brickSpawner';
 
-const SCORE_DELAY = 2;
-
 class GameScene extends Phaser.Scene {
     constructor() {
         super({
@@ -29,13 +27,6 @@ class GameScene extends Phaser.Scene {
     update(time, delta) {
         this.car.update(this.keys, time, delta);
         this.brickSpawner.update(time, delta);
-
-        this.currentScoreDelay += delta / 1000;
-
-        if (this.currentScoreDelay > SCORE_DELAY) {
-            this.UpdateScore();
-            this.currentScoreDelay = 0;
-        }
     }
 
     SpawnObjects() {
