@@ -4,18 +4,18 @@ export default class Brick extends Phaser.GameObjects.Sprite {
         config.scene.add.existing(this);
         config.scene.physics.world.enable(this);
 
-        this.setDisplaySize(25, 25);
+        this.setDisplaySize(Brick.Config().size.x, Brick.Config().size.y);
 
         this.updateFlag = true;
     }
 
     update(time, delta) {
         if (this.canMove) {
-            this.y += 1;
+            this.y += Brick.Config().moveAmount * (delta / 1000);
         }
 
         this.CheckForReset();
-        if (this.didPassedPlayer() && this.updateFlag) {
+        if (this.DidPassedPlayer() && this.updateFlag) {
             this.scene.UpdateScore();
             this.updateFlag = false;
         }
@@ -24,12 +24,12 @@ export default class Brick extends Phaser.GameObjects.Sprite {
     }
 
     CheckForReset() {
-        if (this.y > 725) {
+        if (this.y > this.scene.game.renderer.height + Brick.Config().size.y) {
             this.canMove = false;
         }
     }
 
-    didPassedPlayer() {
+    DidPassedPlayer() {
         if (this.y > 675) {
             return true;
         }
@@ -39,11 +39,25 @@ export default class Brick extends Phaser.GameObjects.Sprite {
 
     SetStatus(status) {
         this.canMove = status;
-        this.y = -25;
+        this.y = Brick.Config().startPos.y;
         this.updateFlag = true;
     }
 
     carHit(enemy, carHit) {
         this.scene.ResetGame();
+    }
+
+    static Config() {
+        return {
+            size: {
+                x: 25,
+                y: 25
+            },
+            moveAmount: 60,
+            startPos: {
+                x: 0,
+                y: -25
+            }
+        };
     }
 }

@@ -4,17 +4,27 @@ export default class Car extends Phaser.GameObjects.Sprite {
         config.scene.add.existing(this);
         config.scene.physics.world.enable(this);
 
-        this.setDisplaySize(40, 60);
+        this.setDisplaySize(Car.Config().size.x, Car.Config().size.y);
     }
 
     update(keys, time, delta) {
         if (Phaser.Input.Keyboard.JustDown(keys.right)) {
-            this.x += 100;
+            this.x += Car.Config().moveAmount;
         }
 
         if (Phaser.Input.Keyboard.JustDown(keys.left)) {
-            this.x -= 100;
+            this.x -= Car.Config().moveAmount;
         }
         this.x = Phaser.Math.Clamp(this.x, 50, 350);
+    }
+
+    static Config() {
+        return {
+            size: {
+                x: 40,
+                y: 60
+            },
+            moveAmount: 100
+        };
     }
 }

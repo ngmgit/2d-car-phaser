@@ -10,7 +10,7 @@ const config = {
     roundPixels: true,
     parent: 'content',
     width: 400,
-    height: 700,
+    height: window.innerHeight < 700 ? window.innerHeight : 700,
     physics: {
         default: 'arcade',
         arcade: {

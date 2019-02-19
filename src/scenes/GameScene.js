@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
             scene: this,
             key: 'car',
             x: 50,
-            y: 600
+            y: this.game.renderer.height - 150
         });
 
         this.brickSpawner = new BrickSpawner({
@@ -54,10 +54,11 @@ class GameScene extends Phaser.Scene {
     }
 
     SetHUD() {
+        console.log(this);
         this.score = {
             pts: 0,
             textObject: this.make.text({
-                x: 380,
+                x: this.game.renderer.width - 60,
                 y: 60,
                 text: '0',
                 origin: {
