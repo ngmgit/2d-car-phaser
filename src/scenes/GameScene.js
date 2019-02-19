@@ -1,4 +1,5 @@
 import Car from '../sprites/car';
+import BrickSpawner from '../sprites/brickSpawner';
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -18,7 +19,11 @@ class GameScene extends Phaser.Scene {
             scene: this,
             key: 'car',
             x: 50,
-            y: 500
+            y: 600
+        });
+
+        this.brickSpawner = new BrickSpawner({
+            scene: this
         });
 
         this.keys = {
@@ -29,7 +34,20 @@ class GameScene extends Phaser.Scene {
 
     update(time, delta) {
         this.car.update(this.keys, time, delta);
+        this.brickSpawner.update(time, delta);
+    }
+
+    ResetGame() {
+        this.scene.start('TitleScene');
     }
 }
 
 export default GameScene;
+
+// TODO:
+// remove constant value and get appropriate sizes as per the config
+// Take resize into account
+// Add Music, score reader
+// If possible:
+// Add different kind of enemies
+// Effects
