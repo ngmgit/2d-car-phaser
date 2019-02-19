@@ -10,9 +10,6 @@ class GameScene extends Phaser.Scene {
         this.currentScoreDelay = 0;
     }
 
-    preload() {
-    }
-
     create() {
         this.SpawnObjects();
         this.SetAudio();
@@ -54,7 +51,6 @@ class GameScene extends Phaser.Scene {
     }
 
     SetHUD() {
-        console.log(this);
         this.score = {
             pts: 0,
             textObject: this.make.text({
@@ -82,9 +78,13 @@ class GameScene extends Phaser.Scene {
     }
 
     ResetGame() {
-        this.scene.start('TitleScene');
+        const score = this.score.pts;
         this.ResetMusic();
         this.ResetScore();
+
+        this.scene.start('EndScene', {
+            score: score
+        });
     }
 
     ResetMusic() {

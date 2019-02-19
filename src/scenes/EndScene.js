@@ -1,17 +1,23 @@
-class TitleScene extends Phaser.Scene {
+class EndScene extends Phaser.Scene {
     constructor() {
         super({
-            key: 'TitleScene'
+            key: 'EndScene'
         });
     }
 
+    init(data) {
+        this.score = data.score;
+    }
+
     create() {
-        this.startGameKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        const text = 'SCORE: ' + this.score + ' \n\n PRESS SPACE \n TO RESTART';
+
+        this.startGameKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.textObject = this.make.text({
             x: this.game.renderer.width / 2,
             y: this.game.renderer.height / 2,
-            text: 'PRESS ENTER TO START',
+            text: text,
             origin: 0.5,
             style: {
                 fontSize: '24px',
@@ -37,4 +43,4 @@ class TitleScene extends Phaser.Scene {
     }
 }
 
-export default TitleScene;
+export default EndScene;

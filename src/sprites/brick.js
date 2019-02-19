@@ -30,7 +30,7 @@ export default class Brick extends Phaser.GameObjects.Sprite {
     }
 
     DidPassedPlayer() {
-        if (this.y > 675) {
+        if (this.y > this.scene.car.y + Brick.Config().size.y) {
             return true;
         }
 

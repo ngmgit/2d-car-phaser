@@ -1,4 +1,4 @@
-# 2D Car Doge Game - Made with Phaser
+# 2D Car Dodge Game - Made with Phaser
 
 # Setup
 You’ll need to install a few things before you have a working copy of the project.
@@ -9,7 +9,7 @@ Navigate into your workspace directory.
 
 Run:
 
-```git clone https://github.com/nkholski/phaser3-es6-webpack.git```
+```git clone https://github.com/ngmgit/2d-car-phaser.git```
 
 ## 2. Install node.js and npm:
 
@@ -32,11 +32,7 @@ Run:
 
 ```npm run dev```
 
-This will run a server so you can run the game in a browser.
-
-Open your browser and enter localhost:3000 into the address bar.
-
-Also this will start a watch process, so you can change the source and the process will recompile and refresh the browser.
+This will start dev server at localhost:3000.
 
 
 ## Build for deployment:
