@@ -22,6 +22,12 @@ class GameScene extends Phaser.Scene {
             y: 600
         });
 
+        // Add and play the music
+        this.music = this.sound.add('mars-slow');
+        this.music.play({
+            loop: true
+        });
+
         this.brickSpawner = new BrickSpawner({
             scene: this
         });
@@ -39,15 +45,9 @@ class GameScene extends Phaser.Scene {
 
     ResetGame() {
         this.scene.start('TitleScene');
+        this.music.pause();
+        this.music.seek = 0;
     }
 }
 
 export default GameScene;
-
-// TODO:
-// remove constant value and get appropriate sizes as per the config
-// Take resize into account
-// Add Music, score reader
-// If possible:
-// Add different kind of enemies
-// Effects

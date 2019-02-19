@@ -27,6 +27,8 @@ class BootScene extends Phaser.Scene {
         this.load.image('car', 'assets/images/car.png'); // 16-bit later
         this.load.image('brick', 'assets/images/brick.png');
         this.load.image('road', 'assets/images/road.png');
+
+        this.load.audio('mars-slow', 'assets/sound/Map.wav');
     }
 }
 
