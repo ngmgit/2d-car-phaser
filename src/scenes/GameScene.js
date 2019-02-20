@@ -17,7 +17,9 @@ class GameScene extends Phaser.Scene {
 
         this.keys = {
             right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-            left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+            left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+            rightArrow: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
+            leftArrow: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         };
     }
 
