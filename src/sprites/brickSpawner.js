@@ -1,17 +1,14 @@
 import Brick from './brick';
+import Car from './car';
 
 const TOTAL_BRICKS = 10;
-const BRICK_SPEED_RANGE = {
-    min: 2,
-    max: 3.5
-};
 
 export default class BrickSpawner extends Phaser.GameObjects.GameObject {
     constructor(config) {
         super(config.scene);
         config.scene.add.existing(this);
 
-        this.delayCounter = 0;
+        this.speedIncrementer = 0;
         this.currentBrick = 0;
         this.bricks = [];
 
@@ -23,18 +20,20 @@ export default class BrickSpawner extends Phaser.GameObjects.GameObject {
                 y: Brick.Config().startPos.y
             }));
         }
+
+        this.GetBrick();
     }
 
     update(time, delta) {
-        this.delayCounter += delta / 1000;
-
-        if (this.delayCounter > Phaser.Math.RND.realInRange(BRICK_SPEED_RANGE.min, BRICK_SPEED_RANGE.max)) {
+        const activeBrick = Phaser.Math.Clamp(this.currentBrick - 1, 0, TOTAL_BRICKS);
+        if (this.bricks[activeBrick].y > Car.Config().size.y * 2) {
             this.GetBrick();
-            this.delayCounter = 0;
         }
 
+        this.speedIncrementer += (delta / 1000) * 0.5;
+
         this.bricks.forEach(brick => {
-            brick.update(time, delta);
+            brick.update(time, delta, this.speedIncrementer);
         });
     }
 
